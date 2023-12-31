@@ -9,22 +9,13 @@ const Doctortable = () => {
   const [approvalStatus, setApprovalStatus] = useState({})
   
   console.log(approvalStatus,'tyutytuuuuuuzzzzzz');
+  console.log(doctors,'pppppppppppppooooooooooooooooooooooooooooooooo');
 
 
   useEffect(() => {
     instance.get('/admin/doctormanagement').then((doctors) => {
       console.log(doctors,'mkomkomkomkomkoooooooooo');
       setDoctors(doctors.data.doctors)
-    //   if(Object.keys(approvalStatus).length === 0) {
-    //     // setBlockedStatus(new Array(doctors.data.users.length).fill(false));
-    //     const initialStatus = doctors.data.doctors.reduce((acc, doctor) => {
-    //         acc[doctor._id] = null;
-    //         return acc;
-    //       }, {});
-    //       setApprovalStatus(initialStatus);
-    //       console.log(initialStatus,'nuuuuuuuuuuuunnnnuuuuu');
-    //   }
-
     })
   },[approvalStatus])
  
@@ -55,9 +46,9 @@ const Doctortable = () => {
 
   return (
     <>
-      <div className="flex items-center justify-center">
-        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 ">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+      <div className="flex items-center justify-center border border-gray-300">
+        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+          <thead className="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th scope="col" className="px-6 py-3">
                 No.
@@ -114,17 +105,17 @@ const Doctortable = () => {
                     </td>
                 <td className="px-6 py-4">
                     <button
-                      className="font-medium text-green-400 dark:text-blue-500 hover:underline"
+                      className={`font-medium text-green-400 dark:text-blue-500 hover:underline ${approvalStatus[doctor._id] === 'Approved' ? 'hidden' : ' '}`}
                       onClick={() => approve(doctor._id)}
                     >
-                      Approve/
+                      Approve
                     </button>
 
                     <button
-                      className="font-medium text-red-600 dark:text-blue-500 hover:underline"
+                      className={`font-medium text-red-600 dark:text-blue-500 hover:underline ${approvalStatus[doctor._id] !== 'Approved' ? 'hidden' : ' '}`}
                       onClick={() => Inerdict(doctor._id)}
                     >
-                      Inerdict
+                      Interdict
                     </button>
                     
                 </td>

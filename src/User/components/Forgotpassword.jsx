@@ -37,40 +37,98 @@ const Forgotpassword = () => {
   };
 
   return (
-    <>
-      <div className="flex justify-center items-center">
-        <div className="bg-gray-100 p-5 h-96 overflow-auto rounded shadow-md w-80">
-          <h2 className="text-2xl font-semibold mb-4">Forgot Password</h2>
 
-          <form onSubmit={handleSubmit}>
-            <div className="mb-4">
-              <input
-                type="number"
-                name="number"
-                placeholder="Number"
-                className="w-full p-2 border rounded"
-                value={formData.number}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="flex justify-between items-center pt-2">
-              <button
-                type="submit"
-                className=" bg-buttonColor text-white p-2 text-xs hover:bg-buttonColor"
+    <>
+    <div className="bg-slate-300 w-full h-screen flex">
+      <div className="bg-loginBackgroundColor h-full w-1/2 lg:ml-36">
+        <div className="">
+          <h1 className="pt-5 text-white text-6xl font-bold font-mono tracking-widest flex justify-end">
+            HOS
+          </h1>
+          <div className="bg-white w-96 h-80 ml-auto mt-10 shadow-md flex justify-center items-center">
+            <div className="px-20">
+              <h1 className="font-bold font-mono px-14 text-xl text-loginBackgroundColor">
+                HOSPITAL
+              </h1>
+              <form
+                onSubmit={handleSubmit}
+                className="flex flex-col items-end"
               >
-                Send OTP
-              </button>
-            </div>
-            {errorMessage && (
+                <input
+                  className="border-slate-300 rounded custom-input"
+                  type="text"
+                  name="number"
+                  placeholder="Number"
+                  value={formData.number}
+                  onChange={handleChange}
+                />
+                <button
+                  type="submit"
+                  className="bg-loginBackgroundColor text-white text-sm p-1 w-52 mt-4 hover:bg-hoverLogin rounded"
+                >
+                  Send OTP
+                </button>
+                {errorMessage && (
                 <div className="pt-5">
-                <div className="text-red-500">{errorMessage}</div>
-                </div>
-                )}
-            
-          </form>
+                 <div className="text-red-500">{errorMessage}</div>
+                 </div>
+                 )}
+              </form>
+            </div>
+          </div>
         </div>
       </div>
-    </>
+      <div className="bg-slate-300 h-full w-2/4 pt-5">
+        <span className="text-6xl font-bold font-mono tracking-widest">
+          PITAL
+        </span>
+        <div className="bg-loginImage w-96 h-80 mt-10 shadow-md flex justify-center items-center">
+          <div className="px-20">
+            <img
+              src="https://static.vecteezy.com/system/resources/thumbnails/021/809/795/small/doctors-day-illustration-png.png"
+              alt=""
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </>
+
+
+    // <>
+    //   <div className="flex justify-center items-center">
+    //     <div className="bg-gray-100 p-5 h-96 overflow-auto rounded shadow-md w-80">
+    //       <h2 className="text-2xl font-semibold mb-4">Forgot Password</h2>
+
+    //       <form onSubmit={handleSubmit}>
+    //         <div className="mb-4">
+    //           <input
+    //             type="number"
+    //             name="number"
+    //             placeholder="Number"
+    //             className="w-full p-2 border rounded"
+    //             value={formData.number}
+    //             onChange={handleChange}
+    //           />
+    //         </div>
+    //         <div className="flex justify-between items-center pt-2">
+    //           <button
+    //             type="submit"
+    //             className=" bg-buttonColor text-white p-2 text-xs hover:bg-buttonColor"
+    //           >
+    //             Send OTP
+    //           </button>
+    //         </div>
+    //         {errorMessage && (
+    //             <div className="pt-5">
+    //             <div className="text-red-500">{errorMessage}</div>
+    //             </div>
+    //             )}
+            
+    //       </form>
+    //     </div>
+    //   </div>
+    // </>
   );
 };
 

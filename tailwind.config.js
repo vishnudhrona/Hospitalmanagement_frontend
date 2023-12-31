@@ -4,7 +4,9 @@ export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
-    "./node_modules/flowbite/**/*.js"
+    "./node_modules/flowbite/**/*.js",
+    'node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}',
+    "./node_modules/react-tailwindcss-datepicker/dist/index.esm.js"
   ],
   theme: {
     extend: {
@@ -26,7 +28,12 @@ export default {
         doctorName : "#42a895",
         buttonColor : "#00b48d",
         buttonHov : "#17a2b8",
-        megamenuColor : "#429997"
+        megamenuColor : "#429997",
+        slot : "#0078bf",
+        slotButton : "#00b48d",
+        loginBackgroundColor : "#148e9c",
+        hoverLogin : "#139bab",
+        loginImage : "#d6fbff"
       },
     },
   },

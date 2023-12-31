@@ -30,9 +30,9 @@ const Doctorotplogin = () => {
       let otp = formData.otp
         instance.post('/doctors/docotpverification',{otp, number})
         .then((data) => {
-          console.log(data,'ytytytytuiuiuiui');
+          console.log(data.data.auth,'ytytytytuiuiuiui');
           localStorage.setItem('newDoctor',JSON.stringify(data.data.doc));
-          localStorage.setItem('token', JSON.stringify(data.data.auth))
+          localStorage.setItem('doctorToken', JSON.stringify(data.data.auth))
           if(data.data.otpVerifiedStatus === 'approved') {
             navigate('/doctors/doctorlogin')
           } else {

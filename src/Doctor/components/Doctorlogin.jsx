@@ -1,8 +1,12 @@
 import { useState } from "react";
 import  instance from '../../Axios/Axios'
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { doctorId } from "../../Redux/Reducers/doctorSlice";
 
 const Doctorlogin = () => {
+
+  const dispatch = useDispatch()
   const navigate = useNavigate()
   const [formData, setFormData] = useState({
     number: "",
@@ -27,6 +31,8 @@ const Doctorlogin = () => {
         console.log(response.data.status,'Status is true');
         if(response.data.user.signupStatus === "Approved") {
           console.log('Signup status is true');
+          localStorage.setItem('doctorToken', response.data.auth)
+          dispatch(doctorId(response.data.user._id))
           navigate('/doctors/doctorhome')
         } else {
           console.log('Signup status is false');

@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
-import  instance from '../../Axios/Axios'
-import { Link, useNavigate } from 'react-router-dom'
+import instance from "../../Axios/Axios";
+import { Link, useNavigate } from "react-router-dom";
 const Usersignup = () => {
-  const navigate = useNavigate()
+
+  const navigate = useNavigate();
+  
   const [formData, setFormData] = useState({
     patientfirstname: "",
     lastName: "",
@@ -10,79 +12,79 @@ const Usersignup = () => {
     gender: "",
     number: "",
     email: "",
-    password : "",
+    password: "",
   });
 
   const [formErrors, setFormErrors] = useState({
-    email : "",
-    password : "",
-    patientfirstname : "",
+    email: "",
+    password: "",
+    patientfirstname: "",
     lastName: "",
     dob: "",
     gender: "",
     number: "",
-  })
+  });
 
   useEffect(() => {
-    const accessToken = localStorage.getItem('token')
-    if(!accessToken) {
-      navigate('/signup')
+    const accessToken = localStorage.getItem("token");
+    if (!accessToken) {
+      navigate("/signup");
     } else {
-      navigate('/')
-    } 
-  },[navigate])
-    // const [id, setId] = useState(null)
+      navigate("/");
+    }
+  }, [navigate]);
+  // const [id, setId] = useState(null)
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleSubmit =  async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    try{
+    try {
       const validationErrors = {};
 
       if (!formData.email.includes("@")) {
-        validationErrors.email = 'Invalid email address';
-    }
+        validationErrors.email = "Invalid email address";
+      }
 
       if (formData.password.length < 6) {
         validationErrors.password = "Password must be at least 6 characters";
-    }
+      }
 
-    if (!formData.patientfirstname.trim()) {
-      validationErrors.patientfirstname = 'First name is required';
-    }
+      if (!formData.patientfirstname.trim()) {
+        validationErrors.patientfirstname = "First name is required";
+      }
 
-    if (!formData.lastName.trim()) {
-      validationErrors.lastName = 'Last name is required';
-    }
+      if (!formData.lastName.trim()) {
+        validationErrors.lastName = "Last name is required";
+      }
 
-    if (!formData.dob.trim()) {
-      validationErrors.dob = 'Date of birth is required';
-    }
+      if (!formData.dob.trim()) {
+        validationErrors.dob = "Date of birth is required";
+      }
 
-    if (!formData.gender.trim()) {
-      validationErrors.gender = 'Gender is required';
-    }
+      if (!formData.gender.trim()) {
+        validationErrors.gender = "Gender is required";
+      }
 
-    if (!formData.number.trim()) {
-      validationErrors.number = 'Number is required';
-    }
+      if (!formData.number.trim()) {
+        validationErrors.number = "Number is required";
+      }
 
-    if (Object.keys(validationErrors).length > 0) {
-      setFormErrors(validationErrors);
-      return;
-  }
+      if (Object.keys(validationErrors).length > 0) {
+        setFormErrors(validationErrors);
+        return;
+      }
 
-      const response = await instance.post("/signup",{formData})
-      let {data} = response;
-      data = JSON.stringify(data.userSecure)
-      localStorage.setItem('user',data);
-      // localStorage.setItem('token',JSON.stringify(data.auth)) 
-      navigate(`/otpverification/${formData.number}`)
-    }catch(err){
+      const response = await instance.post("/signup", { formData });
+      let { data } = response;
+      data = JSON.stringify(data.userSecure);
+      localStorage.setItem("user", data);
+      // localStorage.setItem('token',JSON.stringify(data.auth))
+      navigate(`/otpverification/${formData.number}`);
+    } catch (err) {
       alert(err);
     }
   };
@@ -93,20 +95,21 @@ const Usersignup = () => {
         <div className="bg-gray-100 p-5 rounded shadow-md w-80">
           <h2 className="text-2xl font-semibold mb-4">Sign Up</h2>
           <form onSubmit={handleSubmit}>
-            <div className="mb-4">
+            <div className="flex gap-4 mb-4">
               <input
                 type="text"
                 name="patientfirstname"
-                placeholder="Patient first name"
-                className="w-full p-2 border rounded"
+                placeholder="First name"
+                className="w-full border rounded "
                 value={formData.patientfirstname}
                 onChange={handleChange}
               />
               {formErrors.patientfirstname && (
-    <span className="text-red-500">{formErrors.patientfirstname}</span>
-  )}
-            </div>
-            <div className="mb-4">
+                <span className="text-red-500">
+                  {formErrors.patientfirstname}
+                </span>
+              )}
+
               <input
                 type="text"
                 name="lastName"
@@ -116,10 +119,11 @@ const Usersignup = () => {
                 onChange={handleChange}
               />
               {formErrors.lastName && (
-    <span className="text-red-500">{formErrors.lastName}</span>
-  )}
+                <span className="text-red-500">{formErrors.lastName}</span>
+              )}
             </div>
-            <div className="mb-4">
+
+            <div className="flex gap-4 mb-4">
               <input
                 type="text"
                 name="dob"
@@ -129,10 +133,9 @@ const Usersignup = () => {
                 onChange={handleChange}
               />
               {formErrors.dob && (
-    <span className="text-red-500">{formErrors.dob}</span>
-  )}
-            </div>
-            <div className="mb-4">
+                <span className="text-red-500">{formErrors.dob}</span>
+              )}
+
               <input
                 type="text"
                 name="gender"
@@ -142,10 +145,11 @@ const Usersignup = () => {
                 onChange={handleChange}
               />
               {formErrors.gender && (
-    <span className="text-red-500">{formErrors.gender}</span>
-  )}
+                <span className="text-red-500">{formErrors.gender}</span>
+              )}
             </div>
-            <div className="mb-4">
+
+            <div className="flex gap-4 mb-4">
               <input
                 type="number"
                 name="number"
@@ -155,11 +159,9 @@ const Usersignup = () => {
                 onChange={handleChange}
               />
               {formErrors.number && (
-    <span className="text-red-500">{formErrors.number}</span>
-  )}
-            </div>
+                <span className="text-red-500">{formErrors.number}</span>
+              )}
 
-            <div className="mb-4">
               <input
                 type="email"
                 name="email"
@@ -168,7 +170,9 @@ const Usersignup = () => {
                 value={formData.email}
                 onChange={handleChange}
               />
-              {formErrors.email && <span className="text-red-500">{formErrors.email}</span>}
+              {formErrors.email && (
+                <span className="text-red-500">{formErrors.email}</span>
+              )}
             </div>
 
             <div className="mb-4">
@@ -181,19 +185,21 @@ const Usersignup = () => {
                 onChange={handleChange}
               />
               {formErrors.password && (
-    <span className="text-red-500">{formErrors.password}</span>
-  )}
+                <span className="text-red-500">{formErrors.password}</span>
+              )}
             </div>
-            
 
-            <button type="submit" className="w-full bg-buttonColor text-white p-2 rounded hover:bg-buttonColor">
+            <button
+              type="submit"
+              className="w-full bg-buttonColor text-white p-2 rounded hover:bg-buttonColor"
+            >
               Sign Up
             </button>
           </form>
           <Link
-            to={'/login'}
+            to={"/login"}
             type="button"
-            className="text-buttonColor bg-white hover:bg-gray-100 border border-buttonColor focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium text-sm p-2 inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 w-full justify-center"
+            className="text-buttonColor bg-white hover:bg-gray-100 border border-buttonColor focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium text-sm p-2 inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 w-full justify-center mt-3"
           >
             New User? Sign up
           </Link>

@@ -3,7 +3,9 @@ import Sidebar from '../User/components/Sidebar'
 import Doctordetails from '../User/components/Doctordetails'
 import Footer from '../User/components/Footer'
 
+
 const Bookappointment = () => {
+
   return (
     <>
     <Navbar />

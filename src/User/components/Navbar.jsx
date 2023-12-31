@@ -11,23 +11,23 @@ import Megamenuspecialities from './Megamenuspecialities';
 import { RiLoginBoxLine } from "react-icons/ri"
 import jwt_decode from 'jwt-decode'
 import Dropdownmenu from './Dropdownmenu';
+// import { useSelector } from 'react-redux';
 
 const Navbar = () => {
 
   const accessToken = localStorage.getItem('token')
-   console.log(accessToken,'tyutyutyutyuuuuu');
   const [showMegaMenuHospitals, setShowMegaMenuHospitals] = useState(false);
   const [showMegaMenuSpecialities, setShowMegaMenuSpecialities] = useState(false);
   const [loggedIn, setLoggedIn] = useState('')
   const [showDropdown, setShowDropdown] = useState(false)
 
+
   useEffect(() => {
     if(accessToken) {
       try {
       const decode = jwt_decode(accessToken)
-      setLoggedIn(decode?.user || '')
+      setLoggedIn(decode || '')
       } catch(err) {
-        console.log(err,'jkooooooooooooooo');
         localStorage.removeItem('token');
       }
     } else {
@@ -54,7 +54,7 @@ const Navbar = () => {
   };
 
   return (
-    // <div style={{ zIndex: 1000 }}>
+    <div className='sticky top-0 z-50'>
     <nav className="bg-customColor border-gray-200 dark:bg-gray-900 dark:border-gray-700">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto">
         <a href="/" className="flex items-center">
@@ -130,7 +130,7 @@ const Navbar = () => {
             </li>
             <li>
               <Link
-                to={"/dropdown"}
+                to={"/paymentsuccess"}
                 className="hover:bg-buttonHov w-auto h-16 flex flex-col py-2 px-4 text-white border-r border-gray-500"
               >
                 <div className="flex items-center">
@@ -145,10 +145,12 @@ const Navbar = () => {
             <li>
               {loggedIn ? (
                 <Link
-                className="text-white p-6 flex items-center gap-2 text-lg"
+                className="text-white p-6 flex items-center gap-2 text-lg "
                 onClick={() => setShowDropdown(!showDropdown)}
               >
-                { loggedIn ? `Hello ${loggedIn}!` : 'Login' }
+               
+                { loggedIn ? `Hello ${loggedIn.user}!` : 'Login' }
+                
                 <div className='absolute'>
                 {showDropdown && (
                   <Dropdownmenu />
@@ -170,7 +172,7 @@ const Navbar = () => {
         </div>
       </div>
     </nav>
-    // </div>
+    </div>
   );
 }
 

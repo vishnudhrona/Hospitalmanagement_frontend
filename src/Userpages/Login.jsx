@@ -1,14 +1,12 @@
 import Footer from '../User/components/Footer'
 import Navbar from '../User/components/Navbar'
-import Userlogin from '../User/components/Userlogin'
+import Userlogin from '../User/components/userLogin'
 
 const Login = () => {
   return (
     <div>
         <Navbar />
-        <div className='py-6'> 
-        <Userlogin /> 
-        </div>
+        <Userlogin />
         <Footer />
     </div>
   )

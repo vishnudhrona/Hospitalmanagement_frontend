@@ -86,10 +86,10 @@ const Doctorsignup = () => {
     <img src="https://www.one-aster.com/themes/images/aster_Logo.png" alt="aster logo" />
     </div>
      <div className="flex justify-center items-center h-screen">
-      <div className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 p-5 h-96 overflow-auto rounded shadow-md w-80">
+      <div className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 p-5 rounded shadow-md w-80">
         <h2 className="text-2xl font-semibold mb-4">Sign Up</h2>
         <form onSubmit={handleSubmit}>
-          <div className="mb-4">
+          <div className="flex items-center justify-items-center mb-4 gap-7">
             <input
               type="text"
               name="firstname"
@@ -101,8 +101,6 @@ const Doctorsignup = () => {
             {formErrors.firstname && (
     <span className="text-red-500">{formErrors.firstname}</span>
             )}
-          </div>
-          <div className="mb-4">
             <input
               type="text"
               name="lastname"
@@ -115,7 +113,7 @@ const Doctorsignup = () => {
     <span className="text-red-500">{formErrors.lastname}</span>
             )}
           </div>
-          <div className="mb-4">
+          <div className="flex items-center justify-center mb-4 gap-7">
             <input
               type="text"
               name="department"
@@ -127,8 +125,6 @@ const Doctorsignup = () => {
              {formErrors.department && (
     <span className="text-red-500">{formErrors.department}</span>
             )}
-          </div>
-          <div className="mb-4">
             <input
               type="text"
               name="gender"
@@ -141,7 +137,7 @@ const Doctorsignup = () => {
     <span className="text-red-500">{formErrors.gender}</span>
             )}
           </div>
-          <div className="mb-4">
+          <div className="flex items-center justify-items-center mb-4 gap-7">
             <input
               type="number"
               name="number"
@@ -153,9 +149,6 @@ const Doctorsignup = () => {
             {formErrors.number && (
     <span className="text-red-500">{formErrors.number}</span>
             )}
-          </div>
-
-          <div className="mb-4">
             <input
               type="email"
               name="email"
@@ -185,7 +178,7 @@ const Doctorsignup = () => {
 
           <button
             type="submit"
-            className="w-full bg-buttonColor text-white p-2 rounded hover:bg-buttonColor"
+            className="w-full bg-buttonColor text-white p-2 mb-2 rounded hover:bg-buttonColor"
           >
             Sign Up
           </button>
@@ -193,7 +186,7 @@ const Doctorsignup = () => {
         <Link
               to={'/doctors/doctorlogin'}
               type="button"
-              className="text-buttonColor bg-white hover:bg-gray-100 border border-buttonColor focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium text-sm p-2 inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 w-full justify-center"
+              className="text-buttonColor bg-white hover:bg-gray-100 border rounded border-buttonColor focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium text-sm p-2 inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 w-full justify-center"
             >
               Already have an account? LogIn
             </Link>

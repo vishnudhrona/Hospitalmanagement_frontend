@@ -5,54 +5,63 @@ import instance from '../../Axios/Axios'
 const Table = () => {
 
   const [users, setUsers] = useState([])
-  const [blockedStatus, setBlockedStatus] = useState([])
-  const [unblockedStatus, setUnblockedStatus] = useState([])
+  const [blockedStatus, setBlockedStatus] = useState({})
+  // const [unblockedStatus, setUnblockedStatus] = useState([])
 
-
+  console.log(blockedStatus,'btyyyyyyyyyyyyyqqqqqq');
+  console.log(users,'pppoooooooooo');
 
   useEffect(() => {
     instance.get('/admin/usermanagement').then((users) => {
-      console.log(users.data.users,'mkomkomkomkomkoooooooooo');
       setUsers(users.data.users)
-      if(blockedStatus.length === 0) {
-        setBlockedStatus(new Array(users.data.users.length).fill(false));
-      }
-      if(unblockedStatus.length === 0) {
-        setUnblockedStatus(new Array(users.data.users.length).fill(false))
-      }
+      // if(blockedStatus.length === 0) {
+      //   setBlockedStatus(new Array(users.data.users.length).fill(false));
+      // }
+      // if(unblockedStatus.length === 0) {
+      //   setUnblockedStatus(new Array(users.data.users.length).fill(false))
+      // }
 
     })
-  },[blockedStatus, unblockedStatus])
+  },[blockedStatus])
 
-  useEffect(() => {
-    // Use this useEffect to update the UI when blockedStatus changes
-    console.log(blockedStatus, 'Blocked Status Updated');
-  }, [blockedStatus]);
-
-
-  const userBlock = (userId, index) => {
-    instance.get(`/admin/userblock?userId=${ userId }`).then((status) => {
-      console.log(status.data.message,'vbvvbvbvbbbbbbb');
-      const updatedStatuses = [...blockedStatus];
-      updatedStatuses[index] = status.data.message;
-      setBlockedStatus(updatedStatuses)
+  // const block = (userId) => {
+  //   instance.get(`/admin/block?userId=${ userId }`).then((status) => {
+  //     console.log(status.data.message,'vbvvbvbvbbbbbbb');
+  //     setBlockedStatus((prevStatus) => ({
+  //       ...prevStatus,
+  //       [userId] : status.data.status
+  //     }))
+  //   }) .catch((error) => {
+  //     console.error(error,'i got userblock error');
+  //   })
+  // }
+  const block = (userId) => {
+    instance.get(`/admin/userblock?userId=${userId}`).then((status) => {
+        console.log(status.data.status,'i got approval status');
+        setBlockedStatus(( prevStatus ) => ({
+            ...prevStatus,
+            [userId] : status.data.status
+        }))
     })
-  }
+ }
   
-  const userUnblock = (userId, index) => {
-    instance.get(`/admin/userunblock?userId=${ userId}`).then((status) => {
+
+  const unblock = (userId) => {
+    instance.get(`/admin/userunblock?userId=${ userId }`).then((status) => {
       console.log(status,'gtygtygtyyyyyyyyyyy');
-      const updatedStatus = [...unblockedStatus];
-      updatedStatus[index] = status.data.message
-      setUnblockedStatus(updatedStatus)
+      setBlockedStatus((prevStatus) => ({
+        ...prevStatus,
+        [userId] : status.data.status
+      }))
     })
   }
+
 
   return (
     <>
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center border border-gray-300">
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 ">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <thead className="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th scope="col" className="px-6 py-3">
                 No.
@@ -98,17 +107,19 @@ const Table = () => {
                 <td className="px-6 py-4">{user.lastName}</td>
                 <td className="px-6 py-4">{user.number}</td>
                 <td className="px-6 py-4">{user.email}</td>
-                <td className="px-6 py-4">{blockedStatus[index]}</td>
+                <td className={`px-6 py-4 ${blockedStatus[user._id] === 'unblock' ? 'text-green-400' : 'text-red-600'}`}>
+                  {user.signupStatus}
+                  </td>
                 <td className="px-6 py-4">
                     <button
                       className="font-medium text-red-600 dark:text-blue-500 hover:underline"
-                      onClick={() => userBlock(user._id, index)}
+                      onClick={() => block(user._id)}
                     >
                       Block/
                     </button>
                     <button
                       className="font-medium text-green-400 dark:text-blue-500 hover:underline"
-                      onClick={() => userUnblock(user._id, index)}
+                      onClick={() => unblock(user._id)}
                     >
                       Unblock
                     </button>

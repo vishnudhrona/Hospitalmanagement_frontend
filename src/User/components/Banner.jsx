@@ -1,3 +1,8 @@
+import 'flowbite';
+import { IoLogoInstagram } from "react-icons/io5";
+import { CiFacebook } from "react-icons/ci";
+import { IoLogoYoutube } from "react-icons/io";
+import { FaGooglePlusSquare } from "react-icons/fa";
 
 const Banner = () => {
   return (
@@ -40,7 +45,7 @@ const Banner = () => {
       />
     </div>
     {/* Item 5 */}
-    <div className="hidden duration-700 ease-in-out" data-carousel-item="">
+    <div className=" duration-700 ease-in-out" data-carousel-item="">
       <img
         src="https://www.asterhospitals.in/sites/default/files/styles/banner_xxl/public/2023-09/Banner%201%20%281%29.jpg.webp?itok=v5yy_gAP"
         className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
@@ -169,8 +174,17 @@ const Banner = () => {
               </p>
               <p className="text-white text-xs pl-3 mb-1">Mini By-passRoad, Govindapuram P.O.</p>
               <p className="text-white text-xs pl-3">Calicut, Kerala, 673016</p>
-              <div>
-              <button>Direction</button>
+              <div className='py-10 px-3'>
+                <h1 className='text-white text-2xl font-mono'>Contact Info</h1>
+                <span className='text-white'>Email: mimsclt@asterhospital.com</span>
+                <button className='bg-green-500 p-2 mt-5 px-5 text-green-900 font-semibold'>Emergency: +91 495 2488 004</button>
+                <button className='bg-green-500 p-2 mt-5 px-7 text-green-900 font-semibold'>Helpline: +91 495 2322 004</button>
+              </div>
+              <div className='flex gap-4'>
+              <IoLogoInstagram className='text-slate-400'/>
+              <CiFacebook className='text-slate-400'/>
+              <IoLogoYoutube className='text-slate-400'/>
+              <FaGooglePlusSquare className='text-slate-400'/>
               </div>
             </div>
           </div>

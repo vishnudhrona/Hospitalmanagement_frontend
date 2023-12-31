@@ -1,31 +1,67 @@
-
-// import { useState } from 'react';
-// import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import Slotselector from './Slotselector';
-
+import { useEffect, useState } from "react";
+import { useParams, Link } from "react-router-dom";
+// import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+// import Slotselector from './Slotselector';
+// import { CgCalendarDates } from "react-icons/cg";
+// import Datecard from './Datecard';
+import instance from "../../Axios/Axios";
+import Slots from "./Slots";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { closingSlot } from "../../Redux/Reducers/PatientSlice";
+import { timeSlot } from "../../Redux/Reducers/PatientSlice";
 
 const Bookingpage = () => {
-    // const [selectedDate, setSelectedDate] = useState(null)
-    // const datepickerRef = useRef(null)
-    // const handleDateChange = (date) => {
-    //     setSelectedDate(date)
-    // };
 
-    // const handleIconClick = () => {
-    //     if (datepickerRef.current) {
-    //       datepickerRef.current.input.focus();
-    //     }
-    //   };
+  const dispatch = useDispatch()
+
+  // const [selectedDate, setSelectedDate] = useState(null);
+  const [doctor, setDoctor] = useState(null);
+  const [scheduledTime, setScheduledTime] = useState(null);
+  const [imageUrl, setImageUrl] = useState(null)
+  const [showSlots, setShowSlots] = useState(false)
+
+  console.log(doctor, "ferrariiii");
+  console.log(imageUrl, "labhorginiiii");
+  console.log(scheduledTime, "porcheeeeee");
+
+  const slotDetails = useSelector((state) => state.patientData.closingSlot)
+  console.log(slotDetails,'bbbbyyyeee porcheeee');
+  
+
+  const { doctorId } = useParams();
+  console.log(doctorId, "i got doctorId in booking page");
+
+  useEffect(() => {
+    instance.get(`/usersidetimeschedule?docId=${doctorId}`).then((response) => {
+      console.log(response, "i got frontend response");
+      setDoctor(response.data.doctorProfile);
+      setImageUrl(response.data.imageUrl)
+      setScheduledTime(response.data.scheduledTime);
+    });
+  }, [doctorId]);
+  
+  // const handleDateChange = (date) => {
+  //   setSelectedDate(date);
+  // };
+
+ const slotShowing = (timeId) => {
+  setShowSlots(true)
+  dispatch(closingSlot(true))
+  dispatch(timeSlot(timeId))
+ }
 
   return (
     <>
       <div className="bg-gray-500 w-full h-11 flex">
-        <a href="/"><img
-          className="h-10 object-cover pl-2"
-          src="https://www.one-aster.com/themes/images/aster_Logo.png"
-          alt=""
-        /></a>
+        <a href="/">
+          <img
+            className="h-10 object-cover pl-2"
+            src="https://www.one-aster.com/themes/images/aster_Logo.png"
+            alt=""
+          />
+        </a>
         <h1 className="text-white mx-auto pt-1 font-bold text-2xl">
           Book an Appointment
         </h1>
@@ -35,34 +71,75 @@ const Bookingpage = () => {
           <p className="text-sm p-2 font-semibold  text-blue-700">
             Available Time
           </p>
-          {/* <div className='ml-auto pr-20'>
-          <DatePicker
-            selected={selectedDate}
-            onChange={handleDateChange}
-            dateFormat="yyyy-MM-dd"
-            placeholderText="Select a date"
-            className="w-21 px-4 py-2 border border-gray-600 rounded focus:outline-none focus:border-blue-500"
-          />
+          {/* <div className="relative ml-auto pr-20">
+            <DatePicker
+              selected={selectedDate}
+              onChange={handleDateChange}
+              dateFormat="yyyy-MM-dd"
+              placeholderText="Select a date"
+              className="w-21 px-4 py-2 border border-gray-600 rounded focus:outline-none focus:border-blue-500"
+            />
+            <CgCalendarDates className="absolute top-1/2 left-40 mt-5 text-blue-600 transform -translate-y-8 w-6 h-6 dark:text-gray-400" />
           </div> */}
         </div>
         <div className="h-80 w-full bg-white mt-3 p-5">
-            <img className='absolute' src="https://www.staples.com/sbd/cre/products/220929/kcfep859/images/phone_coffee.svg" alt="" />
-            <div className='flex pl-40'>
-            <ul className='pl-5'>
-              <li>name</li>
-              <li>specialities</li>
-              <li>place</li>
-              <li>Fee</li>
-            </ul>
-            <div className='ml-auto'>
-            <Slotselector />
+          {imageUrl && (
+            <img
+            className="absolute w-40"
+            src={imageUrl}
+            alt=""
+          />
+          )}
+          <div className="flex justify-center align-middle">
+          {showSlots && slotDetails && (
+            <Slots />
+          )}
+          </div>
+          
+          <div className="flex pl-40 gap-10">
+            {doctor && (
+              <ul className="pl-5">
+                <li className="font-medium text-xl">{doctor.firstname}</li>
+                <li className="text-slate-600">{doctor.department}</li>
+                <li className="text-slate-600">Kozhikode</li>
+                <li className="text-blue-800">Fee : INR {doctor.fee}</li>
+              </ul>
+            )}
+            <div className="grid grid-cols-3 gap-5 pl-5">
+              {scheduledTime &&
+                scheduledTime.map((timeDetails, index) => (
+                  <>
+                  <Link 
+                  // to={'/slots'}
+                  onClick={() => slotShowing(timeDetails._id)}
+                  >
+                    <div className="w-28" key={index}>
+                      <div className="w-auto bg-slate-300 border border-slate-400 h-4 mb-1">
+                        <span className="grid justify-center text-xs">
+                          {timeDetails.dateOfWeek}
+                        </span>
+                      </div>
+                      <div className="bg-slate-300 border border-slate-400">
+                        <span className="flex justify-center text-xs">
+                          {timeDetails.timeFromObject}-{timeDetails.timeToObject}
+                        </span>
+                        <span className="flex justify-center text-xs">
+                          Slots : {timeDetails.slots}
+                        </span>
+                      </div>
+                      <div className="bg-blue-950">
+                        <span className="flex justify-center text-xs text-white">
+                          {timeDetails.dateObject}
+                        </span>
+                      </div>
+                    </div>
+                </Link>
+                  </>
+                ))}
             </div>
-            </div>
-            
-        
+          </div>
+        </div>
       </div>
-      </div>
-      
     </>
   );
 };
